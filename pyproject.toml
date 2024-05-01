@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "mbajk-api"
+version = "0.1.0"
+description = ""
+authors = ["Tine Šuster <tine.suster@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.10"
+pandas = "^2.2.2"
+jupyter = "^1.0.0"
+scikit-learn = "^1.4.2"
+ipykernel = "^6.29.4"
+tensorflow = "2.10.0"
+tensorflow-io-gcs-filesystem = "0.27.0"
+# TODO: add dotenv
+fastapi = "^0.110.3"
+uvicorn = {extras = ["standard"], version = "^0.29.0"}
+matplotlib = "^3.8.4"
+pytest = "^8.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
