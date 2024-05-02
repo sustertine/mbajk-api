@@ -32,4 +32,4 @@ jobs:
 
       - name: Run fetch data script
         run: |
-          python src/data/fetch_data.py
+          poetry run python src/data/fetch_data.py
