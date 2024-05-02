@@ -2,6 +2,7 @@ import pickle as pkl
 import os
 
 import pandas as pd
+from scipy.stats import yeojohnson
 
 from src.models.input_model import InputModel
 
@@ -18,6 +19,10 @@ class InputTransformer:
         data = {k: [v] for k, v in data.items()}
 
         df = pd.DataFrame(data)
+
+        # TODO: yeojohnson Out of range floats are not JSON compliant
+        # for column in df.columns:
+        #     df[column], _ = yeojohnson(df[column])
 
         df['available_bike_stands'] = self.target_scaler.transform(
             df['available_bike_stands'].values.reshape(-1, 1))

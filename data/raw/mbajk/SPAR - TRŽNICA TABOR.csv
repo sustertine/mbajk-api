@@ -1,0 +1,6 @@
+name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
+SPAR - TRŽNICA TABOR,Kardeljeva c. 55,False,False,20,10,10,OPEN,2024-04-30 13:41:51,46.542655,15.634329
+SPAR - TRŽNICA TABOR,Kardeljeva c. 55,False,False,20,10,10,OPEN,2024-04-30 14:02:02,46.542655,15.634329
+SPAR - TRŽNICA TABOR,Kardeljeva c. 55,False,False,20,19,1,OPEN,2024-05-02 08:50:37,46.542655,15.634329
+SPAR - TRŽNICA TABOR,Kardeljeva c. 55,False,False,20,20,0,OPEN,2024-05-02 10:01:15,46.542655,15.634329
+SPAR - TRŽNICA TABOR,Kardeljeva c. 55,False,False,20,19,1,OPEN,2024-05-02 10:31:30,46.542655,15.634329

@@ -1,0 +1,6 @@
+name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
+MLINSKA UL . - AVTOBUSNA POSTAJA,Mlinska ulica 24,False,False,20,12,8,OPEN,2024-04-30 13:48:39,46.558534,15.654739
+MLINSKA UL . - AVTOBUSNA POSTAJA,Mlinska ulica 24,False,False,20,11,9,OPEN,2024-04-30 13:58:46,46.558534,15.654739
+MLINSKA UL . - AVTOBUSNA POSTAJA,Mlinska ulica 24,False,False,20,8,12,OPEN,2024-05-02 08:44:25,46.558534,15.654739
+MLINSKA UL . - AVTOBUSNA POSTAJA,Mlinska ulica 24,False,False,20,9,11,OPEN,2024-05-02 09:55:05,46.558534,15.654739
+MLINSKA UL . - AVTOBUSNA POSTAJA,Mlinska ulica 24,False,False,20,9,11,OPEN,2024-05-02 10:35:26,46.558534,15.654739

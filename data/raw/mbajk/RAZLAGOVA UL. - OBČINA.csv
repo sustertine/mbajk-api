@@ -1,0 +1,6 @@
+name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
+RAZLAGOVA UL. - OBČINA,Razlagova ulica 1,False,False,20,8,12,OPEN,2024-04-30 13:48:39,46.56196,15.650235
+RAZLAGOVA UL. - OBČINA,Razlagova ulica 1,False,False,20,12,8,OPEN,2024-04-30 14:04:11,46.56196,15.650235
+RAZLAGOVA UL. - OBČINA,Razlagova ulica 1,False,False,20,5,15,OPEN,2024-05-02 08:45:12,46.56196,15.650235
+RAZLAGOVA UL. - OBČINA,Razlagova ulica 1,False,False,20,6,14,OPEN,2024-05-02 09:54:55,46.56196,15.650235
+RAZLAGOVA UL. - OBČINA,Razlagova ulica 1,False,False,20,6,14,OPEN,2024-05-02 10:35:18,46.56196,15.650235

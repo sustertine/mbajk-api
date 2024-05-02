@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 if __name__ == '__main__':
-
     url = os.getenv('MBAJK_URL')
     response = requests.get(url)
 
@@ -21,7 +20,7 @@ if __name__ == '__main__':
     df.drop(columns=['position'], inplace=True)
 
     for name, group in df.groupby('name'):
-        filename = f'../data/raw/{name}.csv'
+        filename = os.path.abspath(f'../../data/raw/mbajk/{name}.csv')
         if os.path.exists(filename):
             existing_df = pd.read_csv(filename, parse_dates=['last_update'])
             if existing_df['last_update'].max() < group['last_update'].max():

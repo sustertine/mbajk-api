@@ -22,7 +22,6 @@ jobs:
         pip install poetry
 
     - name: Install dependencies
-      # set env to python 3.10
       run: |
         poetry config virtualenvs.create true
         poetry config virtualenvs.in-project true
