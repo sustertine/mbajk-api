@@ -1,3 +1,4 @@
 name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
 ULICA MOŠE PIJADA - UKC,Ulica Moše Pijada 6,False,False,20,20,0,OPEN,2024-04-30 13:48:02,46.552652,15.646023
 ULICA MOŠE PIJADA - UKC,Ulica Moše Pijada 6,False,False,20,17,3,OPEN,2024-04-30 13:59:49,46.552652,15.646023
+ULICA MOŠE PIJADA - UKC,Ulica Moše Pijada 6,False,False,20,17,3,OPEN,2024-05-02 08:44:34,46.552652,15.646023

@@ -1,3 +1,4 @@
 name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
 "VZAJEMNA, VARUH ZDRAVJA - BETNAVSKA C.",Betnavska c. 83,False,False,20,10,10,OPEN,2024-04-30 13:46:24,46.54199,15.63831
 "VZAJEMNA, VARUH ZDRAVJA - BETNAVSKA C.",Betnavska c. 83,False,False,20,11,9,OPEN,2024-04-30 14:02:40,46.54199,15.63831
+"VZAJEMNA, VARUH ZDRAVJA - BETNAVSKA C.",Betnavska c. 83,False,False,20,18,2,OPEN,2024-05-02 08:49:50,46.54199,15.63831

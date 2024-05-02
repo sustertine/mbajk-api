@@ -1,16 +1,31 @@
+import os
 from io import StringIO
 
 import pandas as pd
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 if __name__ == '__main__':
-    url = 'https://api.jcdecaux.com/vls/v1/stations?contract=maribor&apiKey=5e150537116dbc1786ce5bec6975a8603286526b'
 
+    url = os.getenv('MBAJK_URL')
     response = requests.get(url)
-    if response.status_code == 200:
-        df = pd.read_json(StringIO(response.text))
-        print(df.shape)
-        # df.to_csv('data/raw/maribor.csv', index=False)
-    else:
-        print('Error:', response.status_code)
+
+    df = pd.read_json(StringIO(response.text))
+    df.drop(columns=['contract_name', 'number'], inplace=True, axis=1)
+    df['last_update'] = pd.to_datetime(df['last_update'], unit='ms')
+
+    df_position = pd.json_normalize(df['position'])
+    df = pd.concat([df, df_position], axis=1)
+    df.drop(columns=['position'], inplace=True)
+
+    for name, group in df.groupby('name'):
+        filename = f'../data/raw/{name}.csv'
+        if os.path.exists(filename):
+            existing_df = pd.read_csv(filename, parse_dates=['last_update'])
+            if existing_df['last_update'].max() < group['last_update'].max():
+                group.to_csv(filename, mode='a', header=False, index=False)
+        else:
+            group.to_csv(filename, index=False)
 

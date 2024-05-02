@@ -1,3 +1,4 @@
 name,address,banking,bonus,bike_stands,available_bike_stands,available_bikes,status,last_update,lat,lng
 DVORANA TABOR,Gorkega ulica 48,False,False,20,11,9,OPEN,2024-04-30 13:48:03,46.549005,15.635014
 DVORANA TABOR,Gorkega ulica 48,False,False,20,10,10,OPEN,2024-04-30 13:58:09,46.549005,15.635014
+DVORANA TABOR,Gorkega ulica 48,False,False,20,11,9,OPEN,2024-05-02 08:44:25,46.549005,15.635014
