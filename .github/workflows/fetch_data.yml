@@ -35,3 +35,14 @@ jobs:
       - name: Run fetch data script
         run: |
           poetry run python src/data/fetch_data.py
+
+      - name: Commit and push changes
+        uses: actions/checkout@v3
+        with:
+          ref: develop
+          run: |
+            git config --global user.name 'sustertine'
+            git config --global user.email 'tine.suster@gmail.com'
+            git add ../../data/raw/mbajk/*.csv
+            git commit -m "Hourly data update"
+            git push origin develop 
