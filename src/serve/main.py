@@ -23,3 +23,12 @@ def predict(data: InputModel):
     return {
         "prediction": prediction
     }
+
+
+@app.post("/api/mbajk/predict/{station_name}")  # DVORANA TABOR
+def predict(data: InputModel, station_name: str):
+    transformed_input = input_transformer.transform(data)
+    prediction = model.predict_station(station_name, transformed_input).tolist()
+    return {
+        "prediction": prediction
+    }

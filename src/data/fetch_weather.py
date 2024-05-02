@@ -18,13 +18,19 @@ def fetch_stations_weather():
         lng = df['lng'].iloc[0]
         weather = fetch_weather(lat, lng)
         weather_df = pd.DataFrame(weather['hourly'])
+
+        expected_columns = ['date', 'temperature', 'relative_humidity', 'dew_point', 'apparent_temperature',
+                            'precipitation_probability', 'rain', 'surface_pressure']
+
+        if weather_df.iloc[0].tolist() == expected_columns:
+            weather_df = weather_df.iloc[1:]
+
         weather_df.rename(columns={
             'time': 'date',
             'temperature_2m': 'temperature',
             'relative_humidity_2m': 'relative_humidity',
             'dew_point_2m': 'dew_point'
         }, inplace=True)
-
         weather_file_path = f'../../data/raw/weather/{filename}'
         weather_df.drop_duplicates(subset=['date'], keep='first', inplace=True)
         weather_df.to_csv(weather_file_path, mode='a', index=False)

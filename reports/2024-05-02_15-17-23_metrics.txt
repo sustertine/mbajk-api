@@ -1,0 +1,4 @@
+Metric	Value
+loss	0.042704395949840546
+mean_squared_error	0.04267909377813339
+mean_absolute_error	0.15935206413269043
