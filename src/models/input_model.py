@@ -2,6 +2,7 @@ from pydantic import BaseModel
 
 
 class InputModel(BaseModel):
+    station_name: str = 'DVORANA TABOR'
     temperature: float = 25.1
     relative_humidity: float = 45
     dew_point: float = 12.4

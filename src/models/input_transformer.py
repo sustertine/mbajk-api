@@ -16,6 +16,7 @@ class InputTransformer:
 
     def transform(self, data: InputModel):
         data = data.dict()
+        data.pop('station_name')
         data = {k: [v] for k, v in data.items()}
 
         df = pd.DataFrame(data)
