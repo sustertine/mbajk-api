@@ -32,6 +32,10 @@ jobs:
           poetry env use python3.10
           poetry install
 
+      - name: Create directories
+        run: |
+          mkdir -p ../../data/raw/mbajk
+
       - name: Run fetch data script
         run: |
           poetry run python src/data/fetch_data.py
