@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python 3.10
+      - name: Install Python 3.10
         uses: actions/setup-python@v4
         with:
           python-version: '3.10.0'
@@ -31,4 +31,5 @@ jobs:
           poetry install
 
       - name: Run fetch data script
-        run: python src/data/fetch_data.py
+        run: |
+          python src/data/fetch_data.py
