@@ -13,6 +13,7 @@ def fetch_stations_weather():
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../data/raw/mbajk')
     for filename in os.listdir(base_dir):
         file_path = os.path.join(base_dir, filename)
+        print(f'Processing {file_path}')
         if os.path.isfile(file_path):
             with open(file_path, 'r') as file:
                 lines = file.readlines()

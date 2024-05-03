@@ -21,11 +21,8 @@ if __name__ == '__main__':
     df.drop(columns=['position'], inplace=True)
 
     for name, group in df.groupby('name'):
-        # filename = f'../../data/raw/mbajk/{name}.csv'
-        # filename = os.path.abspath(f'../../data/raw/mbajk/{name}.csv')
         print(f'Saving {name}')
         base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
-        print(f'Base dir: {base_dir}')
         filename = os.path.join(base_dir, 'data', 'raw', 'mbajk', f'{name}.csv')
         if os.path.exists(filename):
             existing_df = pd.read_csv(filename, parse_dates=['last_update'])
