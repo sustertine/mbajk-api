@@ -11,7 +11,7 @@ def fetch_weather(lat, lng):
 
 def fetch_stations_weather():
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../data/raw/mbajk')
-    print(base_dir)
+    print(f'\nFetching weather for stations in {base_dir}\n')
     for filename in os.listdir(base_dir):
         file_path = os.path.join(base_dir, filename)
         print(f'Processing {file_path}')

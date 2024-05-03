@@ -77,6 +77,7 @@ jobs:
       - name: Commit and push changes
         run: |
           poetry run dvc add data/raw/mbajk
+          poetry run dvc commit -m "Update data/raw/mbajk"
           poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
