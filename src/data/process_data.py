@@ -43,6 +43,7 @@ def merge_weather_stations():
 
 
 def preprocess_data(merged_df):
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
     station_name = merged_df['name'].iloc[0]
 
     merged_df.drop(columns=['name'], inplace=True)
@@ -88,7 +89,7 @@ def preprocess_data(merged_df):
     temperature_diff_mean = merged_df['temperature_diff'].mean()
     merged_df['temperature_diff'].fillna(temperature_diff_mean, inplace=True)
 
-    df_base = pd.read_csv('../../data/processed/mbajk_dataset.csv')
+    df_base = pd.read_csv(f'{base_dir}./data/processed/mbajk_dataset.csv')
     merged_df['date'] = pd.to_datetime(merged_df['date']).dt.tz_localize(None)
     df_base['date'] = pd.to_datetime(df_base['date']).dt.tz_localize(None)
     merged_df = pd.concat([df_base, merged_df], axis=0)
@@ -103,7 +104,6 @@ def preprocess_data(merged_df):
 
     merged_df.sort_values(by='date', inplace=True)
 
-    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
     merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
 
