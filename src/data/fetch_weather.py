@@ -13,6 +13,7 @@ def fetch_weather(lat, lng):
 def fetch_stations_weather():
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
     mbajk_dir = os.path.join(base_dir, 'data/raw/mbajk')
+    print(os.listdir(mbajk_dir))
     for filename in os.listdir(mbajk_dir):
         file_path = os.path.join(mbajk_dir, filename)
         df = pd.read_csv(file_path)
