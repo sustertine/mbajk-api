@@ -66,8 +66,8 @@ jobs:
 
       - name: Configure DVC
         run: |
-          dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: Dvc pull
         run: |
