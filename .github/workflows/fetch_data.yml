@@ -9,6 +9,8 @@ on:
 jobs:
   fetch_data:
     runs-on: ubuntu-20.04
+    env:
+      MBAJK_URL: ${{ secrets.MBAJK_URL }}
 
     steps:
       - uses: actions/checkout@v4
