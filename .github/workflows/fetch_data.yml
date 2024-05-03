@@ -43,6 +43,6 @@ jobs:
           git add .
           git pull
           git commit -a -m "Fetch data" --allow-empty
-          git push origin develop ${{ github.ref }}
+          git push origin develop
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
