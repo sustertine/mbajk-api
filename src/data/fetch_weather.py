@@ -13,7 +13,6 @@ def fetch_weather(lat, lng):
 def fetch_stations_weather():
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
     mbajk_dir = os.path.join(base_dir, 'data/raw/mbajk')
-    print(os.listdir(mbajk_dir))
     for filename in os.listdir(mbajk_dir):
         file_path = os.path.join(mbajk_dir, filename)
         df = pd.read_csv(file_path)
@@ -35,7 +34,7 @@ def fetch_stations_weather():
             'relative_humidity_2m': 'relative_humidity',
             'dew_point_2m': 'dew_point'
         }, inplace=True)
-        weather_file_path = f'../../data/raw/weather/{filename}'
+        weather_file_path = f'{base_dir}data/raw/weather/{filename}'
         weather_df.drop_duplicates(subset=['date'], keep='first', inplace=True)
         weather_df.to_csv(weather_file_path, mode='a', index=False)
 
