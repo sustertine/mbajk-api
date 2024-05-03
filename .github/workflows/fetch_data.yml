@@ -65,7 +65,7 @@ jobs:
 
       - name: Dvc pull
         run: |
-          poetry run dvc pull
+          poetry run dvc pull -r origin
 
       - name: Run fetch data script
         run: |
@@ -74,7 +74,7 @@ jobs:
       - name: Commit and push changes
         run: |
           poetry run dvc add data/raw/mbajk
-          poetry run dvc push
+          poetry run dvc push -r origin
 #          git config --local user.email "action@github.com"
 #          git config --local user.name "GitHub Action"
 #          git add .
