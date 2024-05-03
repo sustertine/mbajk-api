@@ -3,6 +3,8 @@ name: Fetch Data
 on:
   schedule:
     - cron: '0 * * * *'
+  push:
+    branches: [ develop ]
 
 jobs:
   fetch_data:
@@ -39,7 +41,7 @@ jobs:
           poetry run python src/data/fetch_data.py
 
       - name: Commit and push changes
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: develop
           run: |
