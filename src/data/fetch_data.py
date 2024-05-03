@@ -22,7 +22,7 @@ if __name__ == '__main__':
     for name, group in df.groupby('name'):
         filename = f'../../data/raw/mbajk/{name}.csv'
         # filename = os.path.abspath(f'../../data/raw/mbajk/{name}.csv')
-        if os.path.exists(filename):
+        if os.path.join(filename):
             existing_df = pd.read_csv(filename, parse_dates=['last_update'])
             if existing_df['last_update'].max() < group['last_update'].max():
                 group.to_csv(filename, mode='a', header=False, index=False)
