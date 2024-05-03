@@ -86,6 +86,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git pull
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - mbajk" --allow-empty)
@@ -145,6 +146,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
+          git pull
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - weather" --allow-empty)
