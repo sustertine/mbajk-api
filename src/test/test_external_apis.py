@@ -17,4 +17,4 @@ def test_openmeteo():
 def test_mbajk_url():
     url = os.getenv('MBAJK_URL')
     response = requests.get(url)
-    assert response.status_code == 404 # 200
+    assert response.status_code == 200
