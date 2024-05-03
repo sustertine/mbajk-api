@@ -20,8 +20,9 @@ if __name__ == '__main__':
     df.drop(columns=['position'], inplace=True)
 
     for name, group in df.groupby('name'):
-        filename = f'../../data/raw/mbajk/{name}.csv'
+        # filename = f'../../data/raw/mbajk/{name}.csv'
         # filename = os.path.abspath(f'../../data/raw/mbajk/{name}.csv')
+        filename = os.path.join(os.getenv('GITHUB_WORKSPACE'), 'data', 'raw', 'mbajk', f'{name}.csv')
         if os.path.join(filename):
             existing_df = pd.read_csv(filename, parse_dates=['last_update'])
             if existing_df['last_update'].max() < group['last_update'].max():
