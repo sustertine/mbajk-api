@@ -77,14 +77,14 @@ jobs:
         run: |
           poetry run python src/data/fetch_data.py
 
-#      - name: Remove files from DVC tracking
-#        run: |
-#          poetry run dvc remove data/
+      #      - name: Remove files from DVC tracking
+      #        run: |
+      #          poetry run dvc remove data/
 
       - name: Commit changes to DVC
         run: |
-#          poetry run dvc add data/
-          poetry run dvc push -r origin  
+          #          poetry run dvc add data/
+               poetry run dvc push -r origin
 
       - name: Commit and push changes
         run: |
