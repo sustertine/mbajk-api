@@ -17,6 +17,7 @@ fastapi = "^0.110.3"
 uvicorn = {extras = ["standard"], version = "^0.29.0"}
 matplotlib = "^3.8.4"
 pytest = "^8.2.0"
+dvc = "^3.50.1"
 
 
 [build-system]
