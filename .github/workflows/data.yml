@@ -126,7 +126,7 @@ jobs:
           poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Dvc pull
+      - name: Git & Dvc pull
         run: |
           git fetch origin
           git pull
@@ -187,8 +187,10 @@ jobs:
           poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
           poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Dvc pull
+      - name: Git & Dvc pull
         run: |
+          git fetch origin
+          git pull
           poetry run dvc pull -r origin
 
       - name: Run process data script
@@ -206,7 +208,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git pull
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - processed" --allow-empty)
