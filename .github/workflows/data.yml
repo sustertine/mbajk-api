@@ -129,6 +129,8 @@ jobs:
       - name: Dvc pull
         run: |
           poetry run dvc pull -r origin
+          git fetch origin
+          git pull
 
       - name: Run fetch weather script
         run: |
@@ -145,7 +147,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git fetch origin
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - mbajk" --allow-empty)
@@ -205,7 +206,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git fetch origin
+          git pull
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - processed" --allow-empty)
