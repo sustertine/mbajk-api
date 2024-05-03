@@ -134,9 +134,21 @@ jobs:
         run: |
           poetry run python src/data/fetch_weather.py
 
-      - name: Commit and push changes
+      - name: Commit DVC changes
         run: |
           poetry run dvc add data/raw/weather
+          poetry run dvc push -r origin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push DVC changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git pull
+          git diff-index --quiet HEAD || (git commit -a -m "Update data" --allow-empty)
+          git push
           poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -181,9 +193,21 @@ jobs:
         run: |
           poetry run python src/data/process_data.py
 
-      - name: Commit and push changes
+      - name: Commit DVC changes
         run: |
           poetry run dvc add data/processed/mbajk
+          poetry run dvc push -r origin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push DVC changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git pull
+          git diff-index --quiet HEAD || (git commit -a -m "Update data" --allow-empty)
+          git push
           poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
