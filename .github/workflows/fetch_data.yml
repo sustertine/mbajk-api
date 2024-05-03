@@ -79,12 +79,12 @@ jobs:
 
       - name: Remove files from DVC tracking
         run: |
-          dvc remove data/
+          poetry run dvc remove data/
 
       - name: Commit changes to DVC
         run: |
-          dvc add data/
-          dvc push -r origin  
+          poetry run dvc add data/
+          poetry run dvc push -r origin  
 
       - name: Commit and push changes
         run: |
@@ -94,7 +94,7 @@ jobs:
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data" --allow-empty)
           git push
-          dvc push -r origin
+          poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
