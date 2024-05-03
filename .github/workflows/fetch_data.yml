@@ -45,4 +45,4 @@ jobs:
           git commit -a -m "Fetch data" --allow-empty
           git push origin develop ${{ github.ref }}
         env:
-          REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
