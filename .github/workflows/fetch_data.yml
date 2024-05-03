@@ -81,7 +81,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  fetch_weather:
+  fetch_data_weather:
     runs-on: ubuntu-20.04
     needs: fetch_data_mbajk
     env:
