@@ -83,7 +83,7 @@ jobs:
 
       - name: Commit changes to DVC
         run: |
-          #          poetry run dvc add data/
+               poetry run dvc add data/raw/mbajk/
                poetry run dvc push -r origin
 
       - name: Commit and push changes
@@ -99,6 +99,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   fetch_data_weather:
+    if: false # temporary
     runs-on: ubuntu-20.04
     needs: fetch_data_mbajk
     env:
