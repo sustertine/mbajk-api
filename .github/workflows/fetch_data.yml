@@ -80,7 +80,7 @@ jobs:
           poetry run dvc push -r origin
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data/raw/mbajk.dvc
+          git add data.dvc
           git commit -m "Update data/raw/mbajk"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
