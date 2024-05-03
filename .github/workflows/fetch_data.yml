@@ -44,5 +44,5 @@ jobs:
           git pull
           git commit -a -m "Fetch data" --allow-empty
           git push origin develop
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
