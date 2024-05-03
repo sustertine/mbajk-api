@@ -32,10 +32,6 @@ jobs:
           poetry env use python3.10
           poetry install
 
-#      - name: Create directories
-#        run: |
-#          mkdir -p ../../data/raw/mbajk
-
       - name: Run fetch data script
         run: |
           poetry run python src/data/fetch_data.py
@@ -47,6 +43,6 @@ jobs:
           git add .
           git pull
           git commit -a -m "Fetch data" --allow-empty
-          git push origin develop
+          git push origin develop ${{ github.ref }}
         env:
           REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
