@@ -38,7 +38,6 @@ jobs:
           poetry run pytest
 
   fetch_data_mbajk:
-    if: false # temporary
     #    needs: test
     runs-on: ubuntu-20.04
     env:
@@ -78,14 +77,10 @@ jobs:
         run: |
           poetry run python src/data/fetch_data.py
 
-      #      - name: Remove files from DVC tracking
-      #        run: |
-      #          poetry run dvc remove data/
-
       - name: Commit changes to DVC
         run: |
-               poetry run dvc add data/raw/mbajk/
-               poetry run dvc push -r origin
+          poetry run dvc add data/raw/mbajk/
+          poetry run dvc push -r origin
 
       - name: Commit and push changes
         run: |
@@ -101,11 +96,9 @@ jobs:
 
   fetch_data_weather:
     runs-on: ubuntu-20.04
-#    needs: fetch_data_mbajk
+    needs: fetch_data_mbajk
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     permissions: write-all
 
     steps:
@@ -128,6 +121,11 @@ jobs:
           poetry env use python3.10
           poetry install
 
+      - name: Configure DVC
+        run: |
+          poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Dvc pull
         run: |
           poetry run dvc pull -r origin
@@ -139,6 +137,53 @@ jobs:
       - name: Commit and push changes
         run: |
           poetry run dvc add data/raw/weather
+          poetry run dvc push -r origin
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  process_data:
+    runs-on: ubuntu-20.04
+    needs: fetch_data_weather
+    env:
+      MBAJK_URL: ${{ secrets.MBAJK_URL }}
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.0'
+
+      - name: Install poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+          poetry env use python3.10
+          poetry install
+
+      - name: Configure DVC
+        run: |
+          poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Dvc pull
+        run: |
+          poetry run dvc pull -r origin
+
+      - name: Run process data script
+        run: |
+          poetry run python src/data/process_data.py
+
+      - name: Commit and push changes
+        run: |
+          poetry run dvc add data/processed/mbajk
           poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

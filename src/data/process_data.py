@@ -17,10 +17,11 @@ def find_nearest(row, df, column='date'):
 
 
 def merge_weather_stations():
-    base_dir = os.path.abspath('../../data/raw/mbajk')
-    weather_dir = os.path.abspath('../../data/raw/weather')
-    for filename in os.listdir(base_dir):
-        file_path = os.path.join(base_dir, filename)
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+    mbajk_dir = os.path.abspath(f'{base_dir}/data/raw/mbajk')
+    weather_dir = os.path.abspath(f'{base_dir}/data/raw/weather')
+    for filename in os.listdir(mbajk_dir):
+        file_path = os.path.join(mbajk_dir, filename)
         station_df = pd.read_csv(file_path)
 
         weather_file_path = os.path.join(weather_dir, filename)

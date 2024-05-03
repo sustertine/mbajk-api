@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 import os
+from remove_headers import remove_header_rows
 
 
 def fetch_weather(lat, lng):
@@ -37,6 +38,8 @@ def fetch_stations_weather():
         weather_file_path = f'{base_dir}/data/raw/weather/{filename}'
         weather_df.drop_duplicates(subset=['date'], keep='first', inplace=True)
         weather_df.to_csv(weather_file_path, mode='a', index=False)
+
+        remove_header_rows(f'{base_dir}/data/raw/weather/')
 
 
 if __name__ == '__main__':
