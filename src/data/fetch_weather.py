@@ -34,7 +34,7 @@ def fetch_stations_weather():
             'relative_humidity_2m': 'relative_humidity',
             'dew_point_2m': 'dew_point'
         }, inplace=True)
-        weather_file_path = f'{base_dir}data/raw/weather/{filename}'
+        weather_file_path = f'{base_dir}/data/raw/weather/{filename}'
         weather_df.drop_duplicates(subset=['date'], keep='first', inplace=True)
         weather_df.to_csv(weather_file_path, mode='a', index=False)
 
