@@ -50,5 +50,5 @@ jobs:
             git config --local user.name "GitHub Action"
             git add .
             git pull
-            git diff-index --quiet HEAD || (git commit -a -m "Fetch data" --allow-empty)
+            git commit -a -m "Fetch data" --allow-empty
             git push origin develop
