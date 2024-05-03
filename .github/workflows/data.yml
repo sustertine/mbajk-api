@@ -128,9 +128,9 @@ jobs:
 
       - name: Dvc pull
         run: |
-          poetry run dvc pull -r origin
           git fetch origin
           git pull
+          poetry run dvc pull -r origin
 
       - name: Run fetch weather script
         run: |
