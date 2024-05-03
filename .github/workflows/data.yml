@@ -149,7 +149,7 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           git pull
-          git diff-index --quiet HEAD || (git commit -a -m "Update data - mbajk" --allow-empty)
+          git diff-index --quiet HEAD || (git commit -a -m "Update data - weather" --allow-empty)
           git push
           poetry run dvc push -r origin
         env:
