@@ -3,12 +3,11 @@ name: Data Pipeline
 on:
   schedule:
     - cron: '0 * * * *'
-  push:
-    branches: [ develop ]
+#  push:
+#    branches: [ develop ]
 
 jobs:
   test:
-    if: false # temporary
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -38,7 +37,7 @@ jobs:
           poetry run pytest
 
   fetch_data_mbajk:
-    #    needs: test
+    needs: test
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
