@@ -23,8 +23,9 @@ def fetch_stations_weather():
             expected_columns = ['date', 'temperature', 'relative_humidity', 'dew_point', 'apparent_temperature',
                                 'precipitation_probability', 'rain', 'surface_pressure']
 
-            if weather_df.iloc[0].tolist() == expected_columns:
-                weather_df = weather_df.iloc[1:]
+            for index, row in weather_df.iterrows():
+                if row.tolist() == expected_columns:
+                    weather_df.drop(index, inplace=True)
 
             weather_df.rename(columns={
                 'time': 'date',
