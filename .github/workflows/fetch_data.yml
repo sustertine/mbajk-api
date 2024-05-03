@@ -7,7 +7,7 @@ on:
     branches: [ develop ]
 
 jobs:
-  fetch_data:
+  test:
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -32,10 +32,36 @@ jobs:
           poetry config virtualenvs.in-project true
           poetry env use python3.10
           poetry install
-
       - name: Run tests
         run: |
           poetry run pytest
+
+  fetch_data:
+    needs: test
+    runs-on: ubuntu-20.04
+    env:
+      MBAJK_URL: ${{ secrets.MBAJK_URL }}
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.0'
+
+      - name: Install poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.create true
+          poetry config virtualenvs.in-project true
+          poetry env use python3.10
+          poetry install
 
       - name: Run fetch data script
         run: |
