@@ -145,11 +145,11 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add .
-          git commit -m "Commit local changes"
           git fetch origin
-          git merge -s ours origin/develop
-          git push origin develop
+          git add .
+          git pull
+          git diff-index --quiet HEAD || (git commit -a -m "Update data - mbajk" --allow-empty)
+          git push
           poetry run dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -205,7 +205,7 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git pull
+          git fetch origin
           git add .
           git pull
           git diff-index --quiet HEAD || (git commit -a -m "Update data - processed" --allow-empty)
