@@ -42,8 +42,6 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
-      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
     permissions: write-all
 
     steps:
@@ -66,6 +64,11 @@ jobs:
           poetry env use python3.10
           poetry install
 
+      - name: Configure DVC
+        run: |
+          dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
       - name: Dvc pull
         run: |
           poetry run dvc pull -r origin
@@ -74,14 +77,24 @@ jobs:
         run: |
           poetry run python src/data/fetch_data.py
 
+      - name: Remove files from DVC tracking
+        run: |
+          dvc remove data/
+
+      - name: Commit changes to DVC
+        run: |
+          dvc add data/
+          dvc push -r origin  
+
       - name: Commit and push changes
         run: |
-          poetry run dvc add data/raw/mbajk
-          poetry run dvc push -r origin
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add data.dvc
-          git commit -m "Update data/raw/mbajk"
+          git add .
+          git pull
+          git diff-index --quiet HEAD || (git commit -a -m "Update data" --allow-empty)
+          git push
+          dvc push -r origin
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
