@@ -14,6 +14,11 @@ def fetch_stations_weather():
     for filename in os.listdir(base_dir):
         file_path = os.path.join(base_dir, filename)
         if os.path.isfile(file_path):
+            with open(file_path, 'r') as file:
+                lines = file.readlines()
+                print(f'Fetching weather for {filename}')
+                print('19th line:')
+                print(lines[18])
             df = pd.read_csv(file_path)
             lat = df['lat'].iloc[0]
             lng = df['lng'].iloc[0]
