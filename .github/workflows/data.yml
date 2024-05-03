@@ -38,6 +38,7 @@ jobs:
           poetry run pytest
 
   fetch_data_mbajk:
+    if: false # temporary
     #    needs: test
     runs-on: ubuntu-20.04
     env:
@@ -100,7 +101,7 @@ jobs:
 
   fetch_data_weather:
     runs-on: ubuntu-20.04
-    needs: fetch_data_mbajk
+#    needs: fetch_data_mbajk
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
