@@ -41,14 +41,12 @@ jobs:
           poetry run python src/data/fetch_data.py
 
       - name: Commit and push changes
-        uses: actions/checkout@v4
-        with:
-          ref: develop
-          token: ${{ secrets.REPO_TOKEN }}
-          run: |
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add .
-            git pull
-            git commit -a -m "Fetch data" --allow-empty
-            git push origin develop
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git pull
+          git commit -a -m "Fetch data" --allow-empty
+          git push origin develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.REPO_TOKEN }}
