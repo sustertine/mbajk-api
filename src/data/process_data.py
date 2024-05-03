@@ -103,7 +103,8 @@ def preprocess_data(merged_df):
 
     merged_df.sort_values(by='date', inplace=True)
 
-    merged_df.to_csv(f'../../data/processed/mbajk/{station_name}.csv', index=False)
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+    merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
 
 if __name__ == '__main__':
