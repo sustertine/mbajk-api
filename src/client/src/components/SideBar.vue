@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {defineComponent, onMounted, ref, withDefaults} from 'vue'
+import {defineComponent, onMounted, ref} from 'vue'
 import {Check, ChevronsUpDown} from 'lucide-vue-next'
 import {cn} from '@/lib/utils'
 import {Button} from '@/components/ui/button'
@@ -24,6 +24,8 @@ import CardTitle from "@/components/ui/card/CardTitle.vue";
 import CardContent from "@/components/ui/card/CardContent.vue";
 import ModeToggle from "@/components/ModeToggle.vue";
 
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 const items = ref<Array<{ value: string, label: string, lat: number, lng: number }>>([])
 
 const open = ref(false)
@@ -36,9 +38,9 @@ const times = Array.from({length: 7}, (_, i) => {
 });
 
 onMounted(async () => {
-  const response = await fetch('http://localhost:8000/api/mbajk/stations/info')
+  const response = await fetch(`${VITE_APP_BACKEND_URL}/api/mbajk/stations/info`)
   const data = await response.json()
-  items.value = data.map(item => ({value: item.name, label: item.name, lat: item.lat, lng: item.lng}))
+  items.value = data.map((item: any) => ({value: item.name, label: item.name, lat: item.lat, lng: item.lng}))
 })
 
 const props = defineProps({
@@ -109,7 +111,8 @@ const emit = defineEmits(['updateValue'])
       <CardContent class="flex justify-around mt-4">
         <div v-for="(time, index) in times" :key="index" class="text-center">
           <div class="bike-text">{{ time }}</div>
-          <div class="bike-text font-bold">{{ predictedBikeSlots[index] }}</div>
+          <div class="bike-text font-bold" v-if="predictedBikeSlots">{{ predictedBikeSlots[index] }}</div>
+          <div class="bike-text font-bold" v-else>Error loading predicted bike slots.</div>
           <FontAwesomeIcon :icon="faBicycle" class="fa-1x"/>
         </div>
       </CardContent>

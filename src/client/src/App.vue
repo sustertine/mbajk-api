@@ -6,6 +6,8 @@ import {onMounted, ref} from "vue";
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 
+const VITE_APP_BACKEND_URL = import.meta.env.VITE_APP_BACKEND_URL;
+
 const setSelectedStation = async (value: any) => {
   selectedStation.value = value;
   lat.value = value.lat;
@@ -25,7 +27,7 @@ const setSelectedStation = async (value: any) => {
     available_bike_stands: 8
   };
 
-  const response = await fetch(`http://localhost:8000/api/mbajk/predict`, {
+  const response = await fetch(`${VITE_APP_BACKEND_URL}/api/mbajk/predict`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -41,7 +43,7 @@ const selectedStation = ref('');
 const lat = ref(46.5547);
 const lng = ref(15.6459);
 const predictedBikeSlots = ref([0, 0, 0, 0, 0, 0, 0]);
-let map;
+let map: any;
 
 onMounted(async () => {
   map = L.map('map').setView([lat.value, lng.value], 13);
@@ -50,10 +52,10 @@ onMounted(async () => {
     maxZoom: 19,
   }).addTo(map);
 
-  const response = await fetch('http://localhost:8000/api/mbajk/stations/info');
+  const response = await fetch(`${VITE_APP_BACKEND_URL}/api/mbajk/stations/info`);
   const data = await response.json();
 
-  data.forEach(item => {
+  data.forEach((item: any) => {
     L.marker([item.lat, item.lng]).addTo(map).bindPopup(item.name);
   });
 })
