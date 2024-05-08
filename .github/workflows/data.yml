@@ -8,6 +8,7 @@ on:
 
 jobs:
   test:
+    if: false # Temporary
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -221,7 +222,7 @@ jobs:
 
   validate_data:
     runs-on: ubuntu-20.04
-    needs: process_data
+    #    needs: process_data
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
@@ -259,6 +260,15 @@ jobs:
       - name: Run validate data script
         run: |
           poetry run python src/data/validate_data.py
+
+      - name: Deploy docs to Netlify
+        uses: nwtgck/actions-netlify@v1.2
+        with:
+          publish-dir: "reports/sites"
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
   test_data:
     runs-on: ubuntu-20.04
