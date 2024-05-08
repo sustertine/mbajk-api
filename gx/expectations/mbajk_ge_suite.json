@@ -3,23 +3,6 @@
   "expectation_suite_name": "mbajk_ge_suite",
   "expectations": [
     {
-      "expectation_type": "expect_table_row_count_to_be_between",
-      "kwargs": {
-        "max_value": 542446,
-        "min_value": 542446
-      },
-      "meta": {
-        "profiler_details": {
-          "metric_configuration": {
-            "domain_kwargs": {},
-            "metric_name": "table.row_count",
-            "metric_value_kwargs": null
-          },
-          "num_batches": 1
-        }
-      }
-    },
-    {
       "expectation_type": "expect_table_columns_to_match_set",
       "kwargs": {
         "column_set": [

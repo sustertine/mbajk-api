@@ -1,8 +1,12 @@
+import os
+
 import great_expectations as ge
 from great_expectations.checkpoint.types.checkpoint_result import CheckpointResult
 
 
 def main():
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+    print(os.listdir(f'{base_dir}/data/processed'))
     context = ge.get_context()
     result: CheckpointResult = context.run_checkpoint(checkpoint_name="mbajk_checkpoint")
     if not result["success"]:
