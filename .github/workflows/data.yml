@@ -221,7 +221,6 @@ jobs:
   validate_data:
     runs-on: ubuntu-20.04
     needs: process_data
-    #    needs: test
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
