@@ -43,7 +43,6 @@ jobs:
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
   fetch_data_mbajk:
-    if: false
     needs: test
     runs-on: ubuntu-20.04
     env:
@@ -221,8 +220,8 @@ jobs:
 
   validate_data:
     runs-on: ubuntu-20.04
-    #    needs: process_data
-    needs: test
+    needs: process_data
+#    needs: test
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
@@ -272,8 +271,8 @@ jobs:
 
   test_data:
     runs-on: ubuntu-20.04
-#    needs: process_data
-    needs: test
+    needs: process_data
+#    needs: test
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
