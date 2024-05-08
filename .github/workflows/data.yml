@@ -259,3 +259,44 @@ jobs:
       - name: Run validate data script
         run: |
           poetry run python src/data/validate_data.py
+
+  test_data:
+    runs-on: ubuntu-20.04
+    needs: process_data
+    env:
+      MBAJK_URL: ${{ secrets.MBAJK_URL }}
+    permissions: write-all
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10.0'
+
+      - name: Install poetry
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+
+      - name: Uncache venv
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Configure DVC
+        run: |
+          poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+          poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Git & Dvc pull
+        run: |
+          git fetch origin
+          git pull
+          poetry run dvc pull -r origin
+
+      - name: Run validate data script
+        run: |
+          poetry run python src/data/data_drift_stability.py
