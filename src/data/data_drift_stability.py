@@ -19,7 +19,7 @@ def data_drift():
     reference = pd.read_csv(f'{base_dir}/data/processed/reference_data.csv')
 
     report.run(reference_data=reference, current_data=current)
-    report.save_html(f'{base_dir}/reports/web/data_drift.html')
+    report.save_html(f'{base_dir}/reports/sites/data_drift.html')
 
 
 def stability_test():
@@ -40,7 +40,7 @@ def stability_test():
     reference = pd.read_csv(f'{base_dir}/data/processed/reference_data.csv')
 
     suite.run(reference_data=reference, current_data=current)
-    suite.save_html(f'{base_dir}/reports/web/data_stability.html')
+    suite.save_html(f'{base_dir}/reports/sites/data_stability.html')
 
 
 if __name__ == '__main__':
