@@ -3,8 +3,8 @@ name: Data Pipeline
 on:
   schedule:
     - cron: '0 * * * *'
-  push:
-    branches: [ develop ]
+#  push:
+#    branches: [ develop ]
 
 jobs:
   test:

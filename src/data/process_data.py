@@ -103,7 +103,6 @@ def preprocess_data(merged_df):
                            'temperature_diff']]
 
     merged_df.sort_values(by='date', inplace=True)
-
     merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
 
