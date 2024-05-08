@@ -47,7 +47,7 @@ def train_eval_model(train_file_path, test_file_path):
         hidden_size = 100
         learning_rate = 0.001
         batch_size = 16
-        n_epochs = 3
+        n_epochs = 50
 
         mlflow.tensorflow.autolog()
 
