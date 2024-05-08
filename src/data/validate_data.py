@@ -5,9 +5,8 @@ from great_expectations.checkpoint.types.checkpoint_result import CheckpointResu
 
 
 def main():
-    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
-    print(os.listdir(f'{base_dir}/data/processed'))
     context = ge.get_context()
+    print(context.get_available_data_asset_names())
     result: CheckpointResult = context.run_checkpoint(checkpoint_name="mbajk_checkpoint")
     if not result["success"]:
         raise ValueError("[Validate]: Checkpoint validation failed!")
