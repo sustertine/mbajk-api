@@ -8,7 +8,6 @@ on:
 
 jobs:
   test:
-    if: false # Temporary
     runs-on: ubuntu-20.04
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -37,7 +36,14 @@ jobs:
         run: |
           poetry run pytest
 
+      - name: Cache .venv directory
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
+
   fetch_data_mbajk:
+    if: false
     needs: test
     runs-on: ubuntu-20.04
     env:
@@ -242,7 +248,11 @@ jobs:
           poetry config virtualenvs.create true
           poetry config virtualenvs.in-project true
           poetry env use python3.10
-          poetry install
+          if [ -d .venv ]; then
+            echo "Dependencies cache hit, skipping installation."
+          else
+            poetry install
+          fi
 
       - name: Configure DVC
         run: |
