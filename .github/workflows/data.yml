@@ -324,7 +324,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 
-  split_data:
+  split_datas:
     runs-on: ubuntu-20.04
     needs: [test_data, validate_data]
     env:
