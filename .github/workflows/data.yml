@@ -360,7 +360,7 @@ jobs:
           git pull
           poetry run dvc pull -r origin
 
-      - name: Run process data script
+      - name: Run train test split script
         run: |
           poetry run python src/data/train_test_split.py
 
