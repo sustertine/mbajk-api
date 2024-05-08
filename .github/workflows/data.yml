@@ -63,12 +63,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
 
-      - name: Install dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
-          poetry env use python3.10
-          poetry install
+      - name: Uncache venv
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Configure DVC
         run: |
@@ -120,12 +119,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
 
-      - name: Install dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
-          poetry env use python3.10
-          poetry install
+      - name: Uncache venv
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Configure DVC
         run: |
@@ -181,12 +179,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
 
-      - name: Install dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
-          poetry env use python3.10
-          poetry install
+      - name: Uncache venv
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Configure DVC
         run: |
@@ -225,8 +222,7 @@ jobs:
 
   validate_data:
     runs-on: ubuntu-20.04
-    #    needs: process_data
-    needs: test
+    needs: process_data
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
@@ -244,12 +240,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install poetry
 
-      - name: Cache .venv directory
+      - name: Uncache venv
         uses: actions/cache@v3
         with:
           path: ./.venv
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
-
 
       - name: Configure DVC
         run: |
