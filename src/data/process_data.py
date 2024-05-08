@@ -89,10 +89,11 @@ def preprocess_data(merged_df):
     temperature_diff_mean = merged_df['temperature_diff'].mean()
     merged_df['temperature_diff'].fillna(temperature_diff_mean, inplace=True)
 
-    df_base = pd.read_csv(f'{base_dir}/data/processed/mbajk_dataset.csv')
-    merged_df['date'] = pd.to_datetime(merged_df['date']).dt.tz_localize(None)
-    df_base['date'] = pd.to_datetime(df_base['date']).dt.tz_localize(None)
-    merged_df = pd.concat([df_base, merged_df], axis=0)
+    # join base data, commented out for speed of fitting
+    # df_base = pd.read_csv(f'{base_dir}/data/processed/mbajk_dataset.csv')
+    # merged_df['date'] = pd.to_datetime(merged_df['date']).dt.tz_localize(None)
+    # df_base['date'] = pd.to_datetime(df_base['date']).dt.tz_localize(None)
+    # merged_df = pd.concat([df_base, merged_df], axis=0)
 
     merged_df['date'] = pd.to_datetime(merged_df['date']).dt.tz_localize(None)
 
@@ -106,6 +107,11 @@ def preprocess_data(merged_df):
     merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
 
+def generate_current_and_reference_data():
+    # TODO: Implement this function
+    pass
+
 if __name__ == '__main__':
     for df in merge_weather_stations():
         preprocess_data(df)
+    generate_current_and_reference_data()

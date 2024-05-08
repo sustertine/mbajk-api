@@ -8,13 +8,10 @@ def main():
     context = ge.get_context()
     result: CheckpointResult = context.run_checkpoint(checkpoint_name="mbajk_checkpoint")
     if not result["success"]:
-        raise ValueError("[Validate]: Checkpoint validation failed!")
-    else:
-        print("[Validate]: Checkpoint validation passed!")
+        print(result)
+        raise ValueError("Data validation failed")
 
-    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
-    print(os.listdir(f'{base_dir}/gx/uncommitted/data_docs/local_site'))
-
+    print("Data validation passed!")
 
 if __name__ == "__main__":
     main()
