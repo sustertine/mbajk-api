@@ -250,16 +250,6 @@ jobs:
           path: ./.venv
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Install dependencies
-        run: |
-          poetry config virtualenvs.create true
-          poetry config virtualenvs.in-project true
-          poetry env use python3.10
-          if [ -d .venv ]; then
-            echo "Dependencies cache hit, skipping installation."
-          else
-            poetry install
-          fi
 
       - name: Configure DVC
         run: |
