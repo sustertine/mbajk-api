@@ -261,12 +261,13 @@ jobs:
         run: |
           poetry run python src/data/validate_data.py
 
+      - name: DEBUG
+        run: ls
+
       - name: Deploy docs to Netlify
         uses: nwtgck/actions-netlify@v1.2
-        run: |
-          ls
         with:
-          publish-dir: "/gx/uncommitted/data_docs/local_site"
+          publish-dir: "gx/uncommitted/data_docs/local_site"
           production-deploy: true
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
