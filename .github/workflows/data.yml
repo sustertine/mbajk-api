@@ -257,22 +257,3 @@ jobs:
       - name: Run validate data script
         run: |
           poetry run python src/data/validate_data.py
-
-      - name: Commit DVC changes
-        run: |
-          poetry run dvc add data/processed/mbajk
-          poetry run dvc push -r origin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Push DVC changes
-        run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add .
-          git pull
-          git diff-index --quiet HEAD || (git commit -a -m "Update data - processed" --allow-empty)
-          git push
-          poetry run dvc push -r origin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -2,7 +2,6 @@ import pandas as pd
 import requests
 import os
 from remove_headers import remove_header_rows
-import time
 
 
 def fetch_weather(lat, lng):
@@ -17,8 +16,6 @@ def fetch_stations_weather():
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
     mbajk_dir = os.path.join(base_dir, 'data/raw/mbajk')
 
-    start_time = time.time()
-    print('Fetching weather data (SCRIPT)')
     for filename in os.listdir(mbajk_dir):
         file_path = os.path.join(mbajk_dir, filename)
         df = pd.read_csv(file_path)
@@ -44,11 +41,7 @@ def fetch_stations_weather():
         weather_df.drop_duplicates(subset=['date'], keep='first', inplace=True)
         weather_df.to_csv(weather_file_path, mode='a', index=False)
 
-    print(f'Finished fetching weather data (SCRIPT), time: {time.time() - start_time}s')
-    start_time = time.time()
-    print('Removing headers from weather data (SCRIPT)')
     remove_header_rows(f'{base_dir}/data/raw/weather/')
-    print(f'Finished headers from weather data (SCRIPT), time: {time.time() - start_time}s')
 
 
 if __name__ == '__main__':
