@@ -225,7 +225,7 @@ jobs:
 
   validate_data:
     runs-on: ubuntu-20.04
-#    needs: process_data
+    #    needs: process_data
     needs: test
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -243,6 +243,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install poetry
+
+      - name: Cache .venv directory
+        uses: actions/cache@v3
+        with:
+          path: ./.venv
+          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         run: |
