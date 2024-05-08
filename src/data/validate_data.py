@@ -13,7 +13,7 @@ def main():
         print("[Validate]: Checkpoint validation passed!")
 
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
-    print(os.listdir(f'{base_dir}/gx/uncommitted/data_docs'))
+    print(os.listdir(f'{base_dir}/gx/uncommitted/data_docs/local_site'))
 
 
 if __name__ == "__main__":
