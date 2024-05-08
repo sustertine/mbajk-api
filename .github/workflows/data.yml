@@ -218,7 +218,7 @@ jobs:
 
   validate_data:
     runs-on: ubuntu-20.04
-    needs: fetch_data_weather
+    needs: process_data
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
     permissions: write-all
