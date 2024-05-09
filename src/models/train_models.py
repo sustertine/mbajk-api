@@ -7,12 +7,6 @@ from keras import Sequential
 from keras.layers import LSTM, Dense
 from keras.losses import MeanSquaredError, MeanAbsoluteError
 from keras.optimizers import Adam
-from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-
-from src.data.feature_engineer import FeatureEngineer
 
 
 def create_dataset(dataset, look_back=1, look_forward=5):
