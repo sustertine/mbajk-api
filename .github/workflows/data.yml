@@ -424,7 +424,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   eval_models:
-    if: false
     runs-on: ubuntu-20.04
     needs: [ split_data ]
     env:

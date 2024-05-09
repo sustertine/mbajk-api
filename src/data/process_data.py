@@ -1,8 +1,6 @@
 import os
 
 import pandas as pd
-from scipy.stats import yeojohnson
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
 
 
 def find_nearest(row, df, column='date'):
@@ -39,6 +37,7 @@ def merge_weather_stations():
 
         merged_df.rename(columns={'last_update': 'date'}, inplace=True)
         station_name = merged_df['name'].iloc[0]
+        merged_df.drop(columns=['name'], inplace=True)
         merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
 def generate_current_and_reference_data():
