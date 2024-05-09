@@ -2,6 +2,7 @@ import os
 
 import numpy as np
 import pandas as pd
+import pickle as pkl
 
 from dotenv import load_dotenv
 from keras import Sequential
@@ -71,7 +72,9 @@ def create_dataset(dataset, look_back=1, look_forward=5):
     return np.array(dataX), np.array(dataY)
 
 
-def preprocess_data(df):
+def preprocess_data(df, station_name=None):
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+
     standard_scaler = StandardScaler()
     minmax_scaler = MinMaxScaler()
     target_scaler = MinMaxScaler()
@@ -99,9 +102,20 @@ def preprocess_data(df):
     out_df = pipeline.fit_transform(df)
 
     target = target_scaler.fit_transform(df[target_feature].values.reshape(-1, 1))
-    # export the target scaler
-    # export pipeline
+
     out_df[target_feature] = target
+
+    if station_name:
+        if not os.path.exists(f'{base_dir}/models/{station_name}'):
+            os.makedirs(f'{base_dir}/models/{station_name}')
+
+        pkl.dump(pipeline, open(f'{base_dir}/models/{station_name}/pipeline.pkl', 'wb'))
+        mlflow.sklearn.log_model(pipeline, f'{station_name}_pipeline')
+        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_pipeline', f'{station_name}_pipeline')
+
+        pkl.dump(target_scaler, open(f'{base_dir}/models/{station_name}/target_scaler.pkl', 'wb'))
+        mlflow.sklearn.log_model(target_scaler, f'{station_name}_target_scaler')
+        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_target_scaler', f'{station_name}_target_scaler')
 
     return out_df
 
@@ -113,6 +127,7 @@ def train_eval_model(train_file_path, test_file_path):
 
     mlflow.set_experiment('evaluate models')
     with mlflow.start_run(run_name=station_name):
+        mlflow.tensorflow.autolog()
         train_df = pd.read_csv(train_file_path)
         test_df = pd.read_csv(test_file_path)
         test_df = preprocess_data(test_df)
@@ -126,9 +141,7 @@ def train_eval_model(train_file_path, test_file_path):
         hidden_size = 100
         learning_rate = 0.001
         batch_size = 16
-        n_epochs = 2
-
-        mlflow.tensorflow.autolog()
+        n_epochs = 1
 
         model = Sequential()
         model.add(
@@ -136,11 +149,47 @@ def train_eval_model(train_file_path, test_file_path):
         model.add(Dense(hidden_size, activation='relu'))
         model.add(LSTM(hidden_size, activation='relu'))
         model.add(Dense(7))
-        model.compile(optimizer=Adam(learning_rate=learning_rate), loss=MeanSquaredError(),
-                      metrics=[MeanSquaredError(), MeanAbsoluteError()])
+        model.compile(optimizer=Adam(learning_rate=learning_rate), loss=MeanSquaredError())
 
         history = model.fit(trainX, trainY, epochs=n_epochs, batch_size=batch_size, verbose=1)
         evaluation = model.evaluate(testX, testY, verbose=1)
+
+
+def train_build(full_dataset_path, station_name):
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+    print(f'Training model for station: {station_name}')
+
+    mlflow.set_experiment('build models')
+    with mlflow.start_run(run_name=station_name):
+        mlflow.tensorflow.autolog()
+        df = pd.read_csv(full_dataset_path)
+        df = preprocess_data(df, station_name)
+
+        look_back = 1
+        look_forward = 7
+        X, y = create_dataset(df, look_back, look_forward)
+
+        hidden_size = 100
+        learning_rate = 0.001
+        batch_size = 16
+        n_epochs = 1
+
+        model = Sequential()
+        model.add(
+            LSTM(hidden_size, activation='relu', input_shape=(X.shape[1], X.shape[2]), return_sequences=True))
+        model.add(Dense(hidden_size, activation='relu'))
+        model.add(LSTM(hidden_size, activation='relu'))
+        model.add(Dense(7))
+        model.compile(optimizer=Adam(learning_rate=learning_rate), loss=MeanSquaredError())
+
+        history = model.fit(X, y, epochs=n_epochs, batch_size=batch_size, verbose=1)
+
+        model.save(f'{base_dir}/models/{station_name}/model.h5')
+
+        mlflow.log_artifact(f'{base_dir}/models/{station_name}/model.h5')
+        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/model', f'{station_name}')
+
+
 
 
 def train_eval_models():
@@ -154,5 +203,18 @@ def train_eval_models():
         train_eval_model(train_file, test_file)
 
 
+def train_build_models():
+    base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
+    processed_dir = f'{base_dir}/data/processed/mbajk'
+    subdirectories = os.listdir(processed_dir)
+
+    for subdir in subdirectories:
+        station_name = subdir
+        full_dataset = f'{processed_dir}/{subdir}'
+        print(f'Training model for station: {station_name}')
+        train_build(full_dataset, station_name)
+
+
 if __name__ == '__main__':
-    train_eval_models()
+    # train_eval_models()
+    train_build_models()

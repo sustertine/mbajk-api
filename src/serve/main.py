@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from fastapi import FastAPI
 from starlette.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
@@ -43,3 +45,7 @@ def get_stations():
 @app.get("/api/mbajk/stations/info")
 def get_stations_info():
     return get_stations_locations()
+
+@app.get("/api/mbajk/stations/model_map")
+def get_model_map():
+    return model.return_model_map()

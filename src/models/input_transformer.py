@@ -21,10 +21,6 @@ class InputTransformer:
 
         df = pd.DataFrame(data)
 
-        # TODO: yeojohnson Out of range floats are not JSON compliant
-        # for column in df.columns:
-        #     df[column], _ = yeojohnson(df[column])
-
         df['available_bike_stands'] = self.target_scaler.transform(
             df['available_bike_stands'].values.reshape(-1, 1))
 
