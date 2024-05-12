@@ -148,7 +148,7 @@ def train_eval_model(train_file_path, test_file_path):
         hidden_size = 100
         learning_rate = 0.001
         batch_size = 16
-        n_epochs = 1
+        n_epochs = 50
 
         model = Sequential()
         model.add(
@@ -179,7 +179,7 @@ def train_build(full_dataset_path, station_name):
         hidden_size = 100
         learning_rate = 0.001
         batch_size = 16
-        n_epochs = 1
+        n_epochs = 50
 
         model = Sequential()
         model.add(
@@ -221,5 +221,5 @@ def train_build_models():
 
 
 if __name__ == '__main__':
-    # train_eval_models()
+    train_eval_models()
     train_build_models()

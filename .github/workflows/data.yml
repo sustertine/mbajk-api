@@ -1,8 +1,8 @@
 name: Data Pipeline
 
 on:
-  #  schedule:
-  #    - cron: '0 * * * *'
+  schedule:
+    - cron: '0 * * * *'
   push:
     branches: [ develop ]
 
@@ -421,53 +421,5 @@ jobs:
           git diff-index --quiet HEAD || (git commit -a -m "Update data - processed" --allow-empty)
           git push
           poetry run dvc push -r origin
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  eval_models:
-    runs-on: ubuntu-20.04
-#    needs: [ split_data ]
-    needs: test
-    env:
-      MBAJK_URL: ${{ secrets.MBAJK_URL }}
-      MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
-      MLFLOW_TRACKING_USERNAME: ${{ secrets.MLFLOW_TRACKING_USERNAME }}
-      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
-    permissions: write-all
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Install Python 3.10
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.10.0'
-
-      - name: Install poetry
-        run: |
-          python -m pip install --upgrade pip
-          pip install poetry
-
-      - name: Uncache venv
-        uses: actions/cache@v3
-        with:
-          path: ./.venv
-          key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Configure DVC
-        run: |
-          poetry run dvc remote modify origin --local access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          poetry run dvc remote modify origin --local secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
-      - name: Git & Dvc pull
-        run: |
-          git fetch origin
-          git pull
-          poetry run dvc pull -r origin
-
-      - name: Run validate data script
-        run: |
-          poetry run python src/models/train_eval_models.py
-
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
