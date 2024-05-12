@@ -34,7 +34,7 @@ const value = ref('')
 const times = Array.from({length: 7}, (_, i) => {
   const date = new Date();
   date.setHours(date.getHours() + i + 1);
-  return date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', hour12: false}); // Display the time in a 24-hour format
+  return date.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit', hour12: false});
 });
 
 onMounted(async () => {
@@ -45,6 +45,7 @@ onMounted(async () => {
 
 const props = defineProps({
   predictedBikeSlots: Array,
+  availableBikeSlots: Number
 });
 
 const emit = defineEmits(['updateValue'])
@@ -102,7 +103,7 @@ const emit = defineEmits(['updateValue'])
       <CardHeader class="mt-4 md text-center font-bold">
         <CardTitle>{{ value }}</CardTitle>
         <CardTitle class="text-4xl text-center mt-4">
-          123
+          {{ availableBikeSlots || 'Error loading available bike stands.'}}
         </CardTitle>
         <div class="mt-2 text-center">
           <FontAwesomeIcon :icon="faBicycle" class="fa-2x"/>

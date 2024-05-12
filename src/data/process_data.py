@@ -40,10 +40,5 @@ def merge_weather_stations():
         merged_df.drop(columns=['name'], inplace=True)
         merged_df.to_csv(f'{base_dir}/data/processed/mbajk/{station_name}.csv', index=False)
 
-def generate_current_and_reference_data():
-    # TODO: Implement this function
-    pass
-
 if __name__ == '__main__':
     merge_weather_stations()
-    generate_current_and_reference_data()

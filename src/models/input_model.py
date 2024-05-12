@@ -12,3 +12,6 @@ class InputModel(BaseModel):
     surface_pressure: float = 984.3
     bike_stands: int = 22
     available_bike_stands: int = 8
+
+class StationInputModel(BaseModel):
+    station_name: str = 'DVORANA TABOR'

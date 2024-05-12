@@ -61,6 +61,9 @@ class FeatureEngineer(BaseEstimator, TransformerMixin):
 
         return X
 
+    def set_output(self, *, transform=None):
+        pass
+
 
 def create_dataset(dataset, look_back=1, look_forward=5):
     dataX, dataY = [], []
@@ -99,6 +102,8 @@ def preprocess_data(df, station_name=None):
         ('column_transformer', column_transformer),
     ])
 
+    pipeline.set_output(transform="pandas")
+
     out_df = pipeline.fit_transform(df)
 
     target = target_scaler.fit_transform(df[target_feature].values.reshape(-1, 1))
@@ -111,11 +116,13 @@ def preprocess_data(df, station_name=None):
 
         pkl.dump(pipeline, open(f'{base_dir}/models/{station_name}/pipeline.pkl', 'wb'))
         mlflow.sklearn.log_model(pipeline, f'{station_name}_pipeline')
-        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_pipeline', f'{station_name}_pipeline')
+        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_pipeline',
+                              f'{station_name}_pipeline')
 
         pkl.dump(target_scaler, open(f'{base_dir}/models/{station_name}/target_scaler.pkl', 'wb'))
         mlflow.sklearn.log_model(target_scaler, f'{station_name}_target_scaler')
-        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_target_scaler', f'{station_name}_target_scaler')
+        mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/{station_name}_target_scaler',
+                              f'{station_name}_target_scaler')
 
     return out_df
 
@@ -188,8 +195,6 @@ def train_build(full_dataset_path, station_name):
 
         mlflow.log_artifact(f'{base_dir}/models/{station_name}/model.h5')
         mlflow.register_model(f'runs:/{mlflow.active_run().info.run_id}/model', f'{station_name}')
-
-
 
 
 def train_eval_models():
