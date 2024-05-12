@@ -38,7 +38,7 @@ jobs:
 
   train_eval_models:
     runs-on: ubuntu-20.04
-    needs: [ split_data ]
+    needs: [ install-env ]
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
       MLFLOW_TRACKING_URI: ${{ secrets.MLFLOW_TRACKING_URI }}
