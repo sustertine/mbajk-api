@@ -68,3 +68,7 @@ def get_stations():
 @app.get("/api/mbajk/stations/info")
 def get_stations_info():
     return get_stations_locations()
+
+@app.get("/api/health")
+def health():
+    return {"status": "ok"}
