@@ -76,7 +76,7 @@ jobs:
           git pull
           poetry run dvc pull -r origin
 
-      - name: Run validate data script
+      - name: Run evaluate/build models script script
         run: |
           poetry run python src/models/train_eval_models.py
 
