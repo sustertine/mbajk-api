@@ -1,3 +1,5 @@
+name: Calculate metrics
+
 on:
   schedule:
     - cron: '0 0 * * *'
