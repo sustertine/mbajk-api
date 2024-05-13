@@ -35,7 +35,7 @@ def main():
 
             df['last_update'] = pd.to_datetime(df['last_update'])
             mse, mae, evs = calculate_errors(df, station_predictions)
-            mlflow.log_param('dataset', dataset)
+            mlflow.log_param('dataset', os.path.join(mbajk_dir, dataset))
             print(f'{dataset}:\n\t- MSE: {mse}\n\t- MAE: {mae}\n\t- EVS: {evs}')
 
             if mse == 'NaN':
