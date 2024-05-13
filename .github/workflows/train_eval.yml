@@ -40,7 +40,6 @@ jobs:
 
   train_eval_models:
     runs-on: ubuntu-20.04
-    if: false
     needs: [ install-env ]
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}

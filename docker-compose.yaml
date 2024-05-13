@@ -7,6 +7,10 @@ services:
       - 8000:8000
     environment:
       - MBAJK_URL:https://api.jcdecaux.com/vls/v1/stations?contract=maribor&apiKey=5e150537116dbc1786ce5bec6975a8603286526b
+      - MLFLOW_TRACKING_URI:https://dagshub.com/sustertine/mbajk-api.mlflow
+      - MLFLOW_TRACKING_USERNAME:sustertine
+      - MLFLOW_TRACKING_PASSWORD:d98f979f8ec35ecee07922b67bc1d828efa7666c
+      - MONGO_URL:mongodb+srv://admin:admin@winedbcluster.ldc583m.mongodb.net/mbajk-api-calls?retryWrites=true&w=majority
   frontend:
     build:
       context: ./src/client/
