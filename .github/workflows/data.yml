@@ -43,6 +43,7 @@ jobs:
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
   fetch_data_mbajk:
+    if: false
     needs: test
     runs-on: ubuntu-20.04
     env:

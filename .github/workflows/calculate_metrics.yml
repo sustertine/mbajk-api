@@ -1,8 +1,8 @@
 on:
-  workflow_run:
-    workflows: [ "Data pipeline" ]
-    types:
-      - completed
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches: [ develop ]
 
 jobs:
   install-env:
@@ -28,7 +28,7 @@ jobs:
           poetry config virtualenvs.in-project true
           poetry env use python3.10
           poetry install
-          
+
 
       - name: Cache .venv directory
         uses: actions/cache@v3
@@ -36,9 +36,8 @@ jobs:
           path: ./.venv
           key: ${{ runner.os }}-venv-${{ hashFiles('**/poetry.lock') }}
 
-  train_eval_models:
+  calculate_metrics:
     runs-on: ubuntu-20.04
-    if: false
     needs: [ install-env ]
     env:
       MBAJK_URL: ${{ secrets.MBAJK_URL }}
@@ -79,8 +78,7 @@ jobs:
 
       - name: Run evaluate/build models script script
         run: |
-          poetry run python src/models/train_eval_models.py
+          poetry run python src/models/eval_predictions.py
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
