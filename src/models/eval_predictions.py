@@ -13,6 +13,7 @@ username = os.getenv('MLFLOW_TRACKING_USERNAME')
 password = os.getenv('MLFLOW_TRACKING_PASSWORD')
 
 def main():
+    print(os.getenv('MONGO_URL'))
     client = MongoClient(os.getenv('MONGO_URL'))
 
     base_dir = os.getenv('GITHUB_WORKSPACE', '../../')
