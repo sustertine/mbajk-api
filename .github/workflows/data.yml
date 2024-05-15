@@ -1,8 +1,8 @@
 name: Data Pipeline
 
 on:
-  schedule:
-    - cron: '0 * * * *'
+#  schedule:
+#    - cron: '0 * * * *'
 
 jobs:
   test:
